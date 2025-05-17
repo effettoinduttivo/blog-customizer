@@ -37,25 +37,6 @@ export const ArticleParamsForm = ({ setArticleState }: FormProps) => {
 		rootRef: sidebarRef,
 	});
 
-	// useEffect(() => {
-	// 	const handleOverlayClick = (event: MouseEvent) => {
-	// 		if (
-	// 			sidebarRef.current &&
-	// 			!sidebarRef.current.contains(event.target as Node)
-	// 		) {
-	// 			setSidebarOpen(false);
-	// 		}
-	// 	};
-
-	// 	if (isSidebarOpen) {
-	// 		document.addEventListener('mousedown', handleOverlayClick);
-	// 	}
-
-	// 	return () => {
-	// 		document.removeEventListener('mousedown', handleOverlayClick);
-	// 	};
-	// }, [isSidebarOpen]);
-
 	const handleOptionChange = <K extends keyof ArticleStateType>(
 		field: K,
 		value: ArticleStateType[K]
@@ -77,6 +58,16 @@ export const ArticleParamsForm = ({ setArticleState }: FormProps) => {
 		setArticleState(defaultArticleState);
 		setSidebarOpen(false);
 	};
+
+	const setDisableFontColor = fontColors.map((option) => ({
+		...option,
+		disabled: option.value === formState.backgroundColor.value,
+	}));
+
+	const setDisableBackgroundColor = backgroundColors.map((option) => ({
+		...option,
+		disabled: option.value === formState.fontColor.value,
+	}));
 
 	return (
 		<>
@@ -117,7 +108,7 @@ export const ArticleParamsForm = ({ setArticleState }: FormProps) => {
 					/>
 					<Select
 						selected={formState.fontColor}
-						options={fontColors}
+						options={setDisableFontColor}
 						onChange={(value) => {
 							handleOptionChange('fontColor', value);
 						}}
@@ -126,7 +117,7 @@ export const ArticleParamsForm = ({ setArticleState }: FormProps) => {
 					<Separator />
 					<Select
 						selected={formState.backgroundColor}
-						options={backgroundColors}
+						options={setDisableBackgroundColor}
 						onChange={(value) => {
 							handleOptionChange('backgroundColor', value);
 						}}
