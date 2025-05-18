@@ -21,13 +21,16 @@ import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 import styles from './ArticleParamsForm.module.scss';
 
 type FormProps = {
+	articleState: ArticleStateType;
 	setArticleState: (state: ArticleStateType) => void;
 };
 
-export const ArticleParamsForm = ({ setArticleState }: FormProps) => {
+export const ArticleParamsForm = ({
+	articleState,
+	setArticleState,
+}: FormProps) => {
 	const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
-	const [formState, setFormState] =
-		useState<ArticleStateType>(defaultArticleState);
+	const [formState, setFormState] = useState<ArticleStateType>(articleState);
 
 	const sidebarRef = useRef<HTMLDivElement | null>(null);
 
